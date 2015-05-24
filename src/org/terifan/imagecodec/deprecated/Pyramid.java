@@ -1,5 +1,8 @@
-package org.terifan.multimedia.pic;
+package org.terifan.imagecodec.deprecated;
 
+import org.terifan.imagecodec.ColorSpace;
+import org.terifan.imagecodec.dct.IntDCTn;
+import org.terifan.imagecodec.dct.IntDCT;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -33,8 +36,7 @@ public class Pyramid
 	{
 		try
 		{
-//			File file = new File("d:/temp/in/Avril Lavigne_-_179.jpg");
-			File file = new File("d:/temp/image compression/in/Lenna.png");
+			File file = new File("D:\\temp\\image_compression\\in\\Lenna.png");
 			BufferedImage source = ImageIO.read(file);
 			BufferedImage debug1 = ImageIO.read(file);
 			BufferedImage debug2 = ImageIO.read(file);
@@ -181,10 +183,10 @@ public class Pyramid
 
 			g.dispose();
 
-			ImageIO.write(debug1, "png", new File("d:/temp/image compression/out/thumb_" + file.getName()));
-			ImageIO.write(debug2, "png", new File("d:/temp/image compression/out/pred1_" + file.getName()));
-			ImageIO.write(debug3, "png", new File("d:/temp/image compression/out/pred2_" + file.getName()));
-			ImageIO.write(debug4, "png", new File("d:/temp/image compression/out/diff_" + file.getName()));
+			ImageIO.write(debug1, "png", new File("D:\\temp\\image_compression\\out\\thumb_" + file.getName()));
+			ImageIO.write(debug2, "png", new File("D:\\temp\\image_compression\\out\\pred1_" + file.getName()));
+			ImageIO.write(debug3, "png", new File("D:\\temp\\image_compression\\out\\pred2_" + file.getName()));
+			ImageIO.write(debug4, "png", new File("D:\\temp\\image_compression\\out\\diff_" + file.getName()));
 		}
 		catch (Throwable e)
 		{

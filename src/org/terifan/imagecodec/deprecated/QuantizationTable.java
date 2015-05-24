@@ -1,4 +1,4 @@
-package org.terifan.multimedia.pic;
+package org.terifan.imagecodec.deprecated;
 
 
 public class QuantizationTable
@@ -16,13 +16,13 @@ public class QuantizationTable
 			aQuality = 200 - aQuality * 2;
 		}
 
-		int[] quantval = new int[W*H];
+		int[] quantval = new int[W * H];
 
 		if (aComponent == 3)
 		{
 			for (int i = 0; i < quantval.length; i++)
 			{
-				quantval[i] = 128-(int)Math.round(127*Math.cos(Math.PI/2*i/(double)(quantval.length-1)));
+				quantval[i] = 128 - (int)Math.round(127 * Math.cos(Math.PI / 2 * i / (double)(quantval.length - 1)));
 			}
 
 			for (int i = 0; i < quantval.length; i++)
@@ -65,25 +65,25 @@ public class QuantizationTable
 			};
 			int[] hadamard_quant_tbl =
 			{
-				10, 12, 14, 14,  18,  24,  49,  72,
-				12, 12, 13, 17,  22,  35,  64,  92,
-				14, 13, 16, 22,  37,  55,  78,  95,
-				14, 17, 22, 29,  56,  64,  87,  98,
-				18, 22, 37, 56,  68,  81, 103, 112,
-				24, 35, 55, 64,  81, 104, 121, 100,
+				10, 12, 14, 14, 18, 24, 49, 72,
+				12, 12, 13, 17, 22, 35, 64, 92,
+				14, 13, 16, 22, 37, 55, 78, 95,
+				14, 17, 22, 29, 56, 64, 87, 98,
+				18, 22, 37, 56, 68, 81, 103, 112,
+				24, 35, 55, 64, 81, 104, 121, 100,
 				49, 64, 78, 87, 103, 121, 120, 103,
-				72, 92, 95, 98, 112, 100, 103,  70
+				72, 92, 95, 98, 112, 100, 103, 70
 			};
 
 			int[] basic_table = aComponent == 0 ? std_luminance_quant_tbl : aComponent == 1 ? std_chrominance_quant_tbl : hadamard_quant_tbl;
 
-			int sw = W/8;
-			int sh = H/8;
+			int sw = W / 8;
+			int sh = H / 8;
 			for (int y = 0, i = 0; y < H; y++)
 			{
 				for (int x = 0; x < W; x++, i++)
 				{
-					int temp = (basic_table[x/sw+y/sh*8] * aQuality + 50) / 100;
+					int temp = (basic_table[x / sw + y / sh * 8] * aQuality + 50) / 100;
 					if (temp <= 0)
 					{
 						temp = 1;

@@ -1,8 +1,9 @@
-package org.terifan.multimedia.pic;
+package org.terifan.imagecodec.dct;
 
 import java.util.Arrays;
 import java.util.Random;
-import static org.terifan.multimedia.pic.Tools.*;
+import org.terifan.imagecodec.deprecated.BitBuffer;
+import static org.terifan.imagecodec.deprecated.Tools.*;
 
 
 public class Hadamard

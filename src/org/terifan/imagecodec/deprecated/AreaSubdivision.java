@@ -1,5 +1,9 @@
-package org.terifan.multimedia.pic;
+package org.terifan.imagecodec.deprecated;
 
+import org.terifan.imagecodec.ColorSpace;
+import org.terifan.imagecodec.dct.IntDCTn;
+import org.terifan.imagecodec.dct.IntDCT8;
+import org.terifan.imagecodec.dct.IntDCT;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -50,8 +54,8 @@ public class AreaSubdivision
 	{
 		try
 		{
-			for (File file : new File("c:/temp/in").listFiles())
-//			File file = new File("c:/temp/in/avril.jpg");
+			for (File file : new File("D:\\temp\\image_compression\\in").listFiles())
+//			File file = new File("D:\\temp\\image_compression\\in\\Lenna.png");
 			{
 				System.out.println(file);
 
@@ -98,7 +102,7 @@ public class AreaSubdivision
 					}
 				}
 
-				ImageIO.write(debug, "png", new File("c:/temp/out/"+file.getName()+".png"));
+				ImageIO.write(debug, "png", new File("D:\\temp\\image_compression\\out", file.getName() + ".png"));
 			}
 		}
 		catch (Throwable e)

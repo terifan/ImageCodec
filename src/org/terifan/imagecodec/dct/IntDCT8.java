@@ -1,7 +1,8 @@
-package org.terifan.multimedia.pic;
+package org.terifan.imagecodec.dct;
 
 import java.util.Random;
-
+import org.terifan.imagecodec.deprecated.Tools;
+import org.terifan.util.log.Log;
 
 
 public class IntDCT8 implements IntDCT
@@ -155,7 +156,7 @@ public class IntDCT8 implements IntDCT
 		{
 			int blk = 8 * i;
 
-			int tmp0 = 0;
+			int tmp0;
 			int tmp1 = block[blk + 4] << 11;
 			int tmp2 = block[blk + 6];
 			int tmp3 = block[blk + 2];
@@ -163,7 +164,7 @@ public class IntDCT8 implements IntDCT
 			int tmp5 = block[blk + 7];
 			int tmp6 = block[blk + 5];
 			int tmp7 = block[blk + 3];
-			int tmp8 = 0;
+			int tmp8;
 
 			if (tmp1 == 0 && tmp2 == 0 && tmp3 == 0 && tmp4 == 0 && tmp5 == 0 && tmp6 == 0 && tmp7 == 0)
 			{
@@ -216,7 +217,7 @@ public class IntDCT8 implements IntDCT
 		{
 			int blk = i;
 
-			int tmp0 = 0;
+			int tmp0;
 			int tmp1 = block[blk + 8 * 4] << 8;
 			int tmp2 = block[blk + 8 * 6];
 			int tmp3 = block[blk + 8 * 2];
@@ -224,7 +225,7 @@ public class IntDCT8 implements IntDCT
 			int tmp5 = block[blk + 8 * 7];
 			int tmp6 = block[blk + 8 * 5];
 			int tmp7 = block[blk + 8 * 3];
-			int tmp8 = 0;
+			int tmp8;
 
 			if (tmp1 == 0 && tmp2 == 0 && tmp3 == 0 && tmp4 == 0 && tmp5 == 0 && tmp6 == 0 && tmp7 == 0)
 			{
@@ -313,11 +314,11 @@ public class IntDCT8 implements IntDCT
 		}
 
 		Tools.print(N, N, original);
-		System.out.println("");
+		Log.out.println("");
 		Tools.print(N, N, input);
-		System.out.println("");
+		Log.out.println("");
 		Tools.print(N, N, output);
-		System.out.println("");
+		Log.out.println("");
 		Tools.print(N, N, err);
 	}
 }

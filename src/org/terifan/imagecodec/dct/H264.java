@@ -1,4 +1,4 @@
-package org.terifan.multimedia.pic;
+package org.terifan.imagecodec.dct;
 
 
 public class H264

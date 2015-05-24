@@ -1,12 +1,13 @@
-package org.terifan.multimedia.pic;
+package org.terifan.imagecodec.deprecated;
 
+import org.terifan.imagecodec.ColorSpace;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
 import javax.imageio.ImageIO;
-import static org.terifan.multimedia.pic.Tools.*;
+import static org.terifan.imagecodec.deprecated.Tools.*;
 
 
 public class Prediction
@@ -20,9 +21,7 @@ public class Prediction
 			double [] toterr = new double[modes+1];
 			int fileCount = 0;
 
-//			File file = new File("c:/temp/in/Avril Lavigne_-_179.jpg");
-//			File file = new File("c:/temp/in/__pic_001a.jpg");
-			for (File file : new File("c:/temp/in").listFiles())
+			for (File file : new File("D:\\temp\\image_compression\\in").listFiles())
 			{
 				BufferedImage image = ImageIO.read(file);
 
@@ -191,7 +190,7 @@ public class Prediction
 				}
 				System.out.println();
 
-				ImageIO.write(debug, "png", new File("c:/temp/out/"+file.getName()+".png"));
+				ImageIO.write(debug, "png", new File("D:\\temp\\image_compression\\out", file.getName()+".png"));
 				fileCount++;
 			}
 

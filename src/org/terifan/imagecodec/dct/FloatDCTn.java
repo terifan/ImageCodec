@@ -1,14 +1,14 @@
-package org.terifan.multimedia.pic;
+package org.terifan.imagecodec.dct;
 
 import java.util.Random;
-
+import org.terifan.imagecodec.deprecated.Tools;
 
 
 public class FloatDCTn implements FloatDCT
 {
 	private final int N;
-	private final double [][] C;
-	private final double [][] Ct;
+	private final double[][] C;
+	private final double[][] Ct;
 	private final double[][] temp;
 
 
@@ -97,7 +97,7 @@ public class FloatDCTn implements FloatDCT
 	}
 
 
-	public static void main(String ... args)
+	public static void main(String... args)
 	{
 		try
 		{
@@ -105,10 +105,10 @@ public class FloatDCTn implements FloatDCT
 
 			int N = 16;
 
-			double[] input = new double[N*N];
-			double[] original = new double[N*N];
+			double[] input = new double[N * N];
+			double[] original = new double[N * N];
 
-			for (int i = 0; i < N*N; i++)
+			for (int i = 0; i < N * N; i++)
 			{
 				input[i] = original[i] = 4096 * rnd.nextDouble();
 			}
@@ -117,12 +117,12 @@ public class FloatDCTn implements FloatDCT
 
 			dct.forward(input);
 
-			double [] output = input.clone();
+			double[] output = input.clone();
 
 			dct.inverse(output);
 
-			double[] err = new double[N*N];
-			for (int i = 0; i < N*N; i++)
+			double[] err = new double[N * N];
+			for (int i = 0; i < N * N; i++)
 			{
 				err[i] = Math.abs(original[i] - output[i]);
 			}

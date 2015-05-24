@@ -1,6 +1,7 @@
-package org.terifan.multimedia.pic;
+package org.terifan.imagecodec.dct;
 
 import java.util.Random;
+import org.terifan.imagecodec.deprecated.Tools;
 
 
 public class IntDCTn implements IntDCT

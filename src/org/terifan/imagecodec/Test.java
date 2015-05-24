@@ -1,4 +1,4 @@
-package org.terifan.multimedia.pic;
+package org.terifan.imagecodec;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

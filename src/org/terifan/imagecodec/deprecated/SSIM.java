@@ -1,5 +1,6 @@
-package org.terifan.multimedia.pic;
+package org.terifan.imagecodec.deprecated;
 
+import org.terifan.imagecodec.ColorSpace;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
