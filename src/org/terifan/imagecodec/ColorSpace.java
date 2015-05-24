@@ -25,13 +25,13 @@ public class ColorSpace
 					{
 						c[0] = (R << 16) + (G << 8) + B;
 
-						toYUV(c, Y, U, V);
+						toYUV2(c, Y, U, V);
 
 						int y = 255 & (c[0] >> 16);
 						int u = 255 & (c[0] >> 8);
 						int v = 255 & (c[0]);
 
-						toRGB(c, Y, U, V);
+						toRGB2(c, Y, U, V);
 
 						int r = 255 & (c[0] >> 16);
 						int g = 255 & (c[0] >> 8);

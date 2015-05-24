@@ -72,8 +72,8 @@ public class AreaSubdivision
 		}
 
 		int n = 1 << aLevel;
-		double min = Double.MAX_VALUE;
-		double max = -Double.MAX_VALUE;
+		double min = 100000;
+		double max = -100000;
 
 		for (int y = 0; y < n; y++)
 		{
@@ -94,7 +94,10 @@ public class AreaSubdivision
 			}
 		}
 
-		if (aLevel == 0 || 8 * aBlockX + 8 * n <= aInput.getWidth() && 8 * aBlockY + 8 * n <= aInput.getHeight() && aLevel <= 6 && Math.abs(max - min) < 0.0625) // 128=0.0625
+		double limit = 0.0625*2; // 128=0.0625
+		double delta = Math.abs(max - min);
+
+		if (aLevel == 0 || 8 * aBlockX + 8 * n <= aInput.getWidth() && 8 * aBlockY + 8 * n <= aInput.getHeight() && aLevel <= 6 && delta < limit)
 		{
 			int[] block = new int[8 * n * 8 * n];
 			int[][] samples = new int[3][block.length];
@@ -136,8 +139,11 @@ public class AreaSubdivision
 		int[] y = new int[64];
 		int[] u = new int[64];
 		int[] v = new int[64];
+
 		aImage.getRGB(aBlockX, aBlockY, 8, 8, block, 0, 8);
+
 		ColorSpace.toYUV2(block, y, u, v);
+
 		dct.forward(y);
 //		dct.forward(u);
 //		dct.forward(v);
