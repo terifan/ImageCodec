@@ -54,7 +54,7 @@ public class AreaSubdivision
 				
 				BufferedImage outputImage = debugImage.getSubimage(0, 0, srcImage.getWidth(), srcImage.getHeight());
 
-				ImageIO.write(outputImage, "png", new File("D:\\temp\\image_compression\\out", file.getName() + ".png"));
+				ImageIO.write(outputImage, "png", new File("D:\\temp\\image_compression\\out", file.getName()));
 			}
 		}
 		catch (Throwable e)
