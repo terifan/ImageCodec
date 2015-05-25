@@ -54,8 +54,8 @@ public class AreaSubdivision
 	{
 		try
 		{
-			for (File file : new File("D:\\temp\\image_compression\\in").listFiles())
-//			File file = new File("D:\\temp\\image_compression\\in\\Lenna.png");
+			for (File file : new File("D:\\Resources\\image compression reference images\\in").listFiles())
+//			File file = new File("D:\Resources\image compression reference images\\Lenna.png");
 			{
 				System.out.println(file);
 

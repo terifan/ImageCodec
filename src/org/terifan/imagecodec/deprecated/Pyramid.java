@@ -36,7 +36,7 @@ public class Pyramid
 	{
 		try
 		{
-			File file = new File("D:\\temp\\image_compression\\in\\Lenna.png");
+			File file = new File("D:\\Resources\\image compression reference images\\Lenna.png");
 			BufferedImage source = ImageIO.read(file);
 			BufferedImage debug1 = ImageIO.read(file);
 			BufferedImage debug2 = ImageIO.read(file);
@@ -183,10 +183,10 @@ public class Pyramid
 
 			g.dispose();
 
-			ImageIO.write(debug1, "png", new File("D:\\temp\\image_compression\\out\\thumb_" + file.getName()));
-			ImageIO.write(debug2, "png", new File("D:\\temp\\image_compression\\out\\pred1_" + file.getName()));
-			ImageIO.write(debug3, "png", new File("D:\\temp\\image_compression\\out\\pred2_" + file.getName()));
-			ImageIO.write(debug4, "png", new File("D:\\temp\\image_compression\\out\\diff_" + file.getName()));
+			ImageIO.write(debug1, "png", new File("D:\\temp\\image_compression\\pyramid\\thumb_" + file.getName()));
+			ImageIO.write(debug2, "png", new File("D:\\temp\\image_compression\\pyramid\\pred1_" + file.getName()));
+			ImageIO.write(debug3, "png", new File("D:\\temp\\image_compression\\pyramid\\pred2_" + file.getName()));
+			ImageIO.write(debug4, "png", new File("D:\\temp\\image_compression\\pyramid\\diff_" + file.getName()));
 		}
 		catch (Throwable e)
 		{
