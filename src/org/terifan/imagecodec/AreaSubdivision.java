@@ -17,8 +17,8 @@ public class AreaSubdivision
 	{
 		try
 		{
-			for (File file : new File("D:\\temp\\image_compression\\in").listFiles())
-//			File file = new File("D:\\temp\\image_compression\\in\\Lenna.png");
+			for (File file : new File("D:\\Resources\\image compression reference images").listFiles())
+//			File file = new File("D:\Resources\image compression reference images\\Lenna.png");
 			{
 				System.out.println(file);
 
@@ -51,10 +51,10 @@ public class AreaSubdivision
 				}
 
 				g.dispose();
-				
+
 				BufferedImage outputImage = debugImage.getSubimage(0, 0, srcImage.getWidth(), srcImage.getHeight());
 
-				ImageIO.write(outputImage, "png", new File("D:\\temp\\image_compression\\out", file.getName()));
+				ImageIO.write(outputImage, "png", new File("D:\\temp\\image_compression\\area_subdivision", file.getName()));
 			}
 		}
 		catch (Throwable e)
@@ -147,7 +147,7 @@ public class AreaSubdivision
 		dct.forward(y);
 //		dct.forward(u);
 //		dct.forward(v);
-		
+
 		if (y[0] >= 2048)
 		{
 			throw new RuntimeException();

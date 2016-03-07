@@ -21,7 +21,7 @@ public class Prediction
 			double [] toterr = new double[modes+1];
 			int fileCount = 0;
 
-			for (File file : new File("D:\\temp\\image_compression\\in").listFiles())
+			for (File file : new File("D:\\Resources\\image compression reference images").listFiles())
 			{
 				BufferedImage image = ImageIO.read(file);
 
@@ -50,7 +50,7 @@ public class Prediction
 				int h = image.getHeight();
 				int [] data = samples[1];
 				int [] colors = new int[]{0xff0000,0x00ff00,0x0000ff,0xffff00,0xff00ff,0x00ffff,0xffffff,0x770000,0x007700,0x000077,0x777700,0x770077,0x007777,0x777777};
-				
+
 				long [] err = new long[modes+1];
 
 				for (int by = 4; by < h; by+=4)
@@ -88,11 +88,11 @@ public class Prediction
 
 						int bestMode = -1;
 						int bestErr = 1 << 30;
-						
+
 						for (int mode = 0; mode <= modes; mode++)
 						{
 							int errAccum = 0;
-							
+
 							for (int iy = 0; iy < 4; iy++)
 							{
 								for (int ix = 0; ix < 4; ix++)
@@ -112,12 +112,12 @@ public class Prediction
 										case 9:
 											switch (ix*16+iy)
 											{
-												case 0x00: 
+												case 0x00:
 													p = (T[ 4]+2*T[ 5]+T[ 6]+2)/4; break;
-												case 0x01: 
+												case 0x01:
 												case 0x10:
 													p = (T[ 5]+2*T[ 6]+T[ 7]+2)/4; break;
-												case 0x02: 
+												case 0x02:
 												case 0x11:
 												case 0x20:
 													p = (T[ 6]+2*T[ 7]+T[ 8]+2)/4; break;
@@ -126,23 +126,23 @@ public class Prediction
 												case 0x21:
 												case 0x30:
 													p = (T[ 7]+2*T[ 8]+T[ 9]+2)/4; break;
-												case 0x31: 
-												case 0x22: 
-												case 0x13: 
+												case 0x31:
+												case 0x22:
+												case 0x13:
 													p = (T[ 8]+2*T[ 9]+T[10]+2)/4; break;
-												case 0x32: 
-												case 0x23: 
+												case 0x32:
+												case 0x23:
 													p = (T[ 9]+2*T[10]+T[11]+2)/4; break;
-												case 0x33: 
+												case 0x33:
 													p = (T[10]+3*T[11]      +2)/4; break;
-												default: 
+												default:
 													throw new RuntimeException();
 											}
 											break;
 										case 10:
 											p = Math.min(Math.max(T[4+ix] + L[4+iy] - T[3], 0), 255);
 											break;
-										default: 
+										default:
 											throw new RuntimeException();
 									}
 
@@ -159,24 +159,24 @@ public class Prediction
 									int t = p+q-128;
 									int u = t < 0 ? 256+t : t > 255 ? t-256 : t;
 									if (c != u) throw new RuntimeException(String.format("ERROR prev=%-3d  input=%-3d  tempin=%-3d  output=%-3d  tempout=%-3d  restore=%-3d\n", p, c, q, o, t, u));
-									
+
 									debug.setRGB(bx+ix, by+iy, (o<<16)+(o<<8)+o);
 
-//									if (mode == modes) 
+//									if (mode == modes)
 //									{
 //										o = colors[bestMode];
 //										debug.setRGB(bx+ix, by+iy, o);
 //									}
 								}
 							}
-							
+
 							err[mode] += errAccum;
 
 							if (errAccum < bestErr)
 							{
 								bestErr = errAccum;
 								bestMode = mode;
-							}		
+							}
 						}
 					}
 				}
@@ -190,7 +190,7 @@ public class Prediction
 				}
 				System.out.println();
 
-				ImageIO.write(debug, "png", new File("D:\\temp\\image_compression\\out", file.getName()+".png"));
+				ImageIO.write(debug, "png", new File("D:\\temp\\image_compression\\prediction", file.getName()+".png"));
 				fileCount++;
 			}
 
