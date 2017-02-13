@@ -146,10 +146,10 @@ public class Pyramid
 								q += 128;
 								int o = q > 255 ? q-255 : q < 0 ? 256 + q : q;
 
-								if (o < 0 || o > 255) throw new RuntimeException();
+								if (o < 0 || o > 255) throw new IllegalStateException();
 								int t = p+q-128;
 								int u = t < 0 ? 256+t : t > 255 ? t-256 : t;
-								if (c != u) throw new RuntimeException(String.format("ERROR prev=%-3d  input=%-3d  tempin=%-3d  output=%-3d  tempout=%-3d  restore=%-3d\n", p, c, q, o, t, u));
+								if (c != u) throw new IllegalStateException(String.format("ERROR prev=%-3d  input=%-3d  tempin=%-3d  output=%-3d  tempout=%-3d  restore=%-3d\n", p, c, q, o, t, u));
 
 								debug2.setRGB(bx+ix, by+iy, (o<<16)+(o<<8)+o);
 							}
@@ -166,10 +166,10 @@ public class Pyramid
 								q += 128;
 								int o = q > 255 ? q-255 : q < 0 ? 256 + q : q;
 
-								if (o < 0 || o > 255) throw new RuntimeException();
+								if (o < 0 || o > 255) throw new IllegalStateException();
 								int t = p+q-128;
 								int u = t < 0 ? 256+t : t > 255 ? t-256 : t;
-								if (c != u) throw new RuntimeException(String.format("ERROR prev=%-3d  input=%-3d  tempin=%-3d  output=%-3d  tempout=%-3d  restore=%-3d\n", p, c, q, o, t, u));
+								if (c != u) throw new IllegalStateException(String.format("ERROR prev=%-3d  input=%-3d  tempin=%-3d  output=%-3d  tempout=%-3d  restore=%-3d\n", p, c, q, o, t, u));
 
 								debug3.setRGB(bx+ix, by+iy, (o<<16)+(o<<8)+o);
 							}

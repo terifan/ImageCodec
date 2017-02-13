@@ -271,7 +271,7 @@ public class AreaSubdivision
 //		dct.forward(u);
 //		dct.forward(v);
 
-		if (y[0]>=2048) throw new RuntimeException();
+		if (y[0]>=2048) throw new IllegalStateException();
 
 		return y[0]/2048.0;
 //		return (u[0]+v[0])/2048.0/2;

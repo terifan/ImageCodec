@@ -345,7 +345,7 @@ public class BitBuffer
 						}
 					}
 				}
-				throw new RuntimeException();
+				throw new IllegalStateException();
 			}
 		}
 
@@ -945,7 +945,7 @@ public class BitBuffer
 //						}
 //					}
 //				}
-//				throw new RuntimeException();
+//				throw new IllegalStateException();
 //			}
 //		}
 //

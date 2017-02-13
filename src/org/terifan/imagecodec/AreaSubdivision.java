@@ -150,7 +150,7 @@ public class AreaSubdivision
 
 		if (y[0] >= 2048)
 		{
-			throw new RuntimeException();
+			throw new IllegalStateException();
 		}
 
 		return y[0] / 2048.0;

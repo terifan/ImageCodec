@@ -136,14 +136,14 @@ public class Prediction
 												case 0x33:
 													p = (T[10]+3*T[11]      +2)/4; break;
 												default:
-													throw new RuntimeException();
+													throw new IllegalStateException();
 											}
 											break;
 										case 10:
 											p = Math.min(Math.max(T[4+ix] + L[4+iy] - T[3], 0), 255);
 											break;
 										default:
-											throw new RuntimeException();
+											throw new IllegalStateException();
 									}
 
 									int c = samples[1][bx+ix+(by+iy)*w];
@@ -155,10 +155,10 @@ public class Prediction
 									q += 128;
 									int o = q > 255 ? q-255 : q < 0 ? 256 + q : q;
 
-									if (o < 0 || o > 255) throw new RuntimeException();
+									if (o < 0 || o > 255) throw new IllegalStateException();
 									int t = p+q-128;
 									int u = t < 0 ? 256+t : t > 255 ? t-256 : t;
-									if (c != u) throw new RuntimeException(String.format("ERROR prev=%-3d  input=%-3d  tempin=%-3d  output=%-3d  tempout=%-3d  restore=%-3d\n", p, c, q, o, t, u));
+									if (c != u) throw new IllegalStateException(String.format("ERROR prev=%-3d  input=%-3d  tempin=%-3d  output=%-3d  tempout=%-3d  restore=%-3d\n", p, c, q, o, t, u));
 
 									debug.setRGB(bx+ix, by+iy, (o<<16)+(o<<8)+o);
 
