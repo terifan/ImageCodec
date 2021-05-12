@@ -1,4 +1,4 @@
-package org.terifan.imagecodec;
+package org.terifan.microthumb;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,9 +16,9 @@ public class MicrothumbDCT
 	{
 		try
 		{
-			int Q = 60;
+			int Q = 50;
 
-			int[][] lims = {{10,1},{4,4},{5,32},{2,16}};
+			int[][] lims = {{10,1},{6,4},{4,32},{2,16}};
 			int bitLen = 0;
 			for (int i = 0; i < lims.length; i++)
 			{

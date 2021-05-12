@@ -1,4 +1,4 @@
-package org.terifan.imagecodec;
+package org.terifan.microthumb;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
