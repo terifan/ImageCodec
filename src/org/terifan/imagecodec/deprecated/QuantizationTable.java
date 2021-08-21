@@ -3,7 +3,20 @@ package org.terifan.imagecodec.deprecated;
 
 public class QuantizationTable
 {
-	public static int[] buildQuantTable(int aQuality, int W, int H, int aComponent)
+	/**
+	 *
+	 * @param aQuality
+	 *   quality ranging from 1-100 inclusive
+	 * @param aWidth
+	 * @param aHeight
+	 * @param aComponent
+	 *   0: JPEG standard luminance
+	 *   1: JPEG standard chrominance
+	 *   2: hadamard
+	 *   3: linear
+	 * @return
+	 */
+	public static int[] buildQuantTable(int aQuality, int aWidth, int aHeight, int aComponent)
 	{
 		aQuality = Math.max(Math.min(aQuality, 100), 1);
 
@@ -16,7 +29,7 @@ public class QuantizationTable
 			aQuality = 200 - aQuality * 2;
 		}
 
-		int[] quantval = new int[W * H];
+		int[] quantval = new int[aWidth * aHeight];
 
 		if (aComponent == 3)
 		{
@@ -77,11 +90,11 @@ public class QuantizationTable
 
 			int[] basic_table = aComponent == 0 ? std_luminance_quant_tbl : aComponent == 1 ? std_chrominance_quant_tbl : hadamard_quant_tbl;
 
-			int sw = W / 8;
-			int sh = H / 8;
-			for (int y = 0, i = 0; y < H; y++)
+			int sw = aWidth / 8;
+			int sh = aHeight / 8;
+			for (int y = 0, i = 0; y < aHeight; y++)
 			{
-				for (int x = 0; x < W; x++, i++)
+				for (int x = 0; x < aWidth; x++, i++)
 				{
 					int temp = (basic_table[x / sw + y / sh * 8] * aQuality + 50) / 100;
 					if (temp <= 0)
