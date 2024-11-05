@@ -1,6 +1,5 @@
 package org.terifan.imagecodec;
 
-import org.terifan.util.log.Log;
 
 public class ColorSpace
 {
@@ -11,17 +10,17 @@ public class ColorSpace
 			int ymin=9999999, ymax=-99999999, umin=9999999, umax=-999999999, vmin=999999999, vmax=-999999999;
 			int rmin=9999999, rmax=-99999999, gmin=9999999, gmax=-999999999, bmin=999999999, bmax=-999999999;
 			int rerr=0, gerr=0, berr=0;
-			
+
 			int[] c = new int[1];
 			int[] Y = new int[1];
 			int[] U = new int[1];
 			int[] V = new int[1];
 
-			for (int R = 0 ; R < 256; R++) 
+			for (int R = 0 ; R < 256; R++)
 			{
-				for (int G = 0 ; G < 256; G++) 
+				for (int G = 0 ; G < 256; G++)
 				{
-					for (int B = 0 ; B < 256; B++) 
+					for (int B = 0 ; B < 256; B++)
 					{
 						c[0] = (R << 16) + (G << 8) + B;
 
@@ -50,9 +49,9 @@ public class ColorSpace
 				}
 			}
 
-			Log.out.println(ymin+" "+umin+" "+vmin+" // " + ymax+" "+umax+" "+vmax);
-			Log.out.println(rmin+" "+gmin+" "+bmin+" // " + rmax+" "+gmax+" "+bmax);
-			Log.out.println(rerr+" "+gerr+" "+berr);
+			System.out.println(ymin+" "+umin+" "+vmin+" // " + ymax+" "+umax+" "+vmax);
+			System.out.println(rmin+" "+gmin+" "+bmin+" // " + rmax+" "+gmax+" "+bmax);
+			System.out.println(rerr+" "+gerr+" "+berr);
 		}
 		catch (Throwable e)
 		{
@@ -117,7 +116,7 @@ public class ColorSpace
 			aV[i] = V;
 		}
 	}
-	
+
 
 	public static void toRGB2(int[] rgb, int[] aY, int[] aU, int[] aV)
 	{
@@ -135,31 +134,31 @@ public class ColorSpace
 		}
 	}
 
-		
+
 	private static int clamp(double v)
 	{
 		return v < 0 ? 0 : v > 255 ? 255 : (int)(v+0.5);
 	}
-	
-		
+
+
 	private static int clamp(int v)
 	{
 		return v < 0 ? 0 : v > 255 ? 255 : v;
 	}
-	
-		
+
+
 	private static int clamp2(int v)
 	{
 		return v < -255 ? -255 : v > 255 ? 255 : v;
 	}
 
-	
+
 	private static int floorDiv2(int x)
 	{
 		return x >= 0 ? x / 2 : -((-x + 1) / 2);
 	}
 
-	
+
 	private static int ceilDiv2(int x)
 	{
 		return x >= 0 ? (x + 1) / 2 : -((-x) / 2);

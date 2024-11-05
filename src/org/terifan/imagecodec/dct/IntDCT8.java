@@ -2,7 +2,6 @@ package org.terifan.imagecodec.dct;
 
 import java.util.Random;
 import org.terifan.imagecodec.deprecated.Tools;
-import org.terifan.util.log.Log;
 
 
 public class IntDCT8 implements IntDCT
@@ -314,11 +313,11 @@ public class IntDCT8 implements IntDCT
 		}
 
 		Tools.print(N, N, original);
-		Log.out.println("");
+		System.out.println("");
 		Tools.print(N, N, input);
-		Log.out.println("");
+		System.out.println("");
 		Tools.print(N, N, output);
-		Log.out.println("");
+		System.out.println("");
 		Tools.print(N, N, err);
 	}
 }
