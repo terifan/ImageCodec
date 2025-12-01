@@ -1,4 +1,4 @@
-package org.terifan.imagecodec.deprecated;
+package deprecated;
 
 import org.terifan.imagecodec.ColorSpace;
 import org.terifan.imagecodec.dct.IntDCTn;

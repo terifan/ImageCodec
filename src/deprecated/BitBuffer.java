@@ -1,4 +1,4 @@
-package org.terifan.imagecodec.deprecated;
+package deprecated;
 
 import java.io.IOException;
 import java.util.Arrays;

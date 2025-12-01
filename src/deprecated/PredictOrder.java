@@ -1,4 +1,4 @@
-package org.terifan.imagecodec.deprecated;
+package deprecated;
 
 
 public class PredictOrder

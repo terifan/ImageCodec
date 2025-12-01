@@ -2,8 +2,8 @@ package org.terifan.imagecodec.dct;
 
 import java.util.Arrays;
 import java.util.Random;
-import org.terifan.imagecodec.deprecated.BitBuffer;
-import static org.terifan.imagecodec.deprecated.Tools.*;
+import deprecated.BitBuffer;
+import static deprecated.Tools.*;
 
 
 public class Hadamard

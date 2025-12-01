@@ -1,4 +1,4 @@
-package org.terifan.microthumb;
+package org.terifan.experimental.microthumb;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import org.terifan.imagecodec.dct.FloatDCT16;
-import org.terifan.imagecodec.deprecated.QuantizationTable;
+import deprecated.QuantizationTable;
 import org.terifan.ui.ImageResizer;
 
 
@@ -16,6 +16,9 @@ public class MicrothumbDCT
 	{
 		try
 		{
+			File srcdir = new File("c:\\users\\patrik\\Pictures\\Image Compression Suit");
+			File dstdir = new File("c:\\data\\microthumbs");
+
 			int Q = 50;
 
 			int[][] lims = {{10,1},{6,4},{4,32},{2,16}};
@@ -26,7 +29,7 @@ public class MicrothumbDCT
 			}
 			System.out.println(3 * bitLen / 8);
 
-			for (File file : new File("D:\\Pictures\\Image Compression Suit").listFiles())
+			for (File file : srcdir.listFiles())
 			{
 				BufferedImage image = ImageIO.read(file);
 
@@ -172,7 +175,7 @@ public class MicrothumbDCT
 				int outHeight = (int)(512 * aspect / 255.0);
 
 				dst = ImageResizer.getScaledImage(dst, 512, outHeight, false);
-				ImageIO.write(dst, "png", new File("D:\\dev\\thumbs\\" + file.getName() + ".png"));
+				ImageIO.write(dst, "png", new File(dstdir, file.getName() + ".png"));
 
 				double totalError = 0;
 				double[] error = new double[src.getWidth() * src.getHeight()];

@@ -1,4 +1,4 @@
-package org.terifan.microthumb;
+package org.terifan.experimental.microthumb;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,6 +13,9 @@ public class MicrothumbRaster
 	{
 		try
 		{
+			File srcdir = new File("c:\\users\\patrik\\Pictures\\Image Compression Suit");
+			File dstdir = new File("c:\\data\\microthumbs");
+
 			double superError = 0;
 
 			int[][][] palette = new int[256][256][3];
@@ -33,7 +36,7 @@ public class MicrothumbRaster
 				}
 			}
 
-			for (File file : new File("D:\\Pictures\\Image Compression Suit").listFiles())
+			for (File file : srcdir.listFiles())
 			{
 				BufferedImage image = ImageIO.read(file);
 
@@ -102,7 +105,7 @@ public class MicrothumbRaster
 
 				dst = ImageResizer.getScaledImage(dst, 512, outHeight, false);
 
-				ImageIO.write(dst, "png", new File("D:\\dev\\thumbs\\" + file.getName() + ".png"));
+				ImageIO.write(dst, "png", new File(dstdir, file.getName() + ".png"));
 			}
 
 			System.out.println(superError);

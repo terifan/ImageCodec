@@ -1,60 +1,31 @@
-package org.terifan.imagecodec;
+package org.terifan.experimental;
 
 import org.terifan.imagecodec.dct.IntDCT8;
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import javax.imageio.ImageIO;
+import org.terifan.imagecodec.ColorSpace;
 
 
 public class AreaSubdivision
 {
-	private static IntDCT8 dct = new IntDCT8();
+	private static IntDCT8 DCT = new IntDCT8();
 
 
 	public static void main(String... args)
 	{
 		try
 		{
-			for (File file : new File("D:\\Resources\\image compression reference images").listFiles())
+			String destDir = "C:\\Data\\area_subdivision";
+
+			for (File file : new File("C:\\Users\\patrik\\Pictures").listFiles(e->e.getName().matches(".*png|.*jpg")))
+//			for (File file : new File("C:\\Users\\patrik\\Pictures\\Image Compression Suit").listFiles(e -> e.getName().matches(".*png|.*jpg")))
 //			File file = new File("D:\Resources\image compression reference images\\Lenna.png");
 			{
-				System.out.println(file);
-
-				BufferedImage srcImage = ImageIO.read(file);
-				BufferedImage workImage = padImage(srcImage);
-
-				double[][] coefficients = new double[workImage.getHeight() / 8][workImage.getWidth() / 8];
-
-				for (int y = 0; y < coefficients.length; y++)
-				{
-					for (int x = 0; x < coefficients[0].length; x++)
-					{
-						coefficients[y][x] = getCoefficient(workImage, 8 * x, 8 * y);
-					}
-				}
-
-				BufferedImage debugImage = new BufferedImage(workImage.getWidth(), workImage.getHeight(), BufferedImage.TYPE_INT_RGB);
-
-				Graphics g = debugImage.createGraphics();
-				g.drawImage(workImage, 0, 0, null);
-
-				int m = Math.min(6, (int)(Math.log(Math.min(workImage.getWidth(), workImage.getHeight())) / Math.log(2)));
-				int n = 1 << m;
-				for (int y = 0; y < coefficients.length; y += n)
-				{
-					for (int x = 0; x < coefficients[0].length; x += n)
-					{
-						split(g, coefficients, x, y, m, workImage, debugImage);
-					}
-				}
-
-				g.dispose();
-
-				BufferedImage outputImage = debugImage.getSubimage(0, 0, srcImage.getWidth(), srcImage.getHeight());
-
-				ImageIO.write(outputImage, "png", new File("D:\\temp\\image_compression\\area_subdivision", file.getName()));
+				processFile(file, destDir);
 			}
 		}
 		catch (Throwable e)
@@ -64,7 +35,44 @@ public class AreaSubdivision
 	}
 
 
-	private static boolean split(Graphics g, double[][] aCoefficients, int aBlockX, int aBlockY, int aLevel, BufferedImage aInput, BufferedImage aDebug)
+	public static void processFile(File aFile, String aDestDir) throws IOException
+	{
+		System.out.println(aFile);
+		BufferedImage srcImage = ImageIO.read(aFile);
+		BufferedImage workImage = padImage(srcImage);
+		double[][] coefficients = new double[workImage.getHeight() / 8][workImage.getWidth() / 8];
+
+		for (int y = 0; y < coefficients.length; y++)
+		{
+			for (int x = 0; x < coefficients[0].length; x++)
+			{
+				coefficients[y][x] = getCoefficient(workImage, 8 * x, 8 * y);
+			}
+		}
+
+		BufferedImage debugImage = new BufferedImage(workImage.getWidth(), workImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+		Graphics2D g = debugImage.createGraphics();
+		g.drawImage(workImage, 0, 0, null);
+
+		int m = Math.min(6, (int)(Math.log(Math.min(workImage.getWidth(), workImage.getHeight())) / Math.log(2)));
+		int n = 1 << m;
+		for (int y = 0; y < coefficients.length; y += n)
+		{
+			for (int x = 0; x < coefficients[0].length; x += n)
+			{
+				split(g, coefficients, x, y, m, workImage, debugImage);
+			}
+		}
+
+		g.dispose();
+
+		BufferedImage outputImage = debugImage.getSubimage(0, 0, srcImage.getWidth(), srcImage.getHeight());
+		ImageIO.write(outputImage, "png", new File(aDestDir, aFile.getName()));
+	}
+
+
+	private static boolean split(Graphics2D g, double[][] aCoefficients, int aBlockX, int aBlockY, int aLevel, BufferedImage aInput, BufferedImage aDebug)
 	{
 		if (aBlockY >= aCoefficients.length || aBlockX >= aCoefficients[0].length)
 		{
@@ -72,8 +80,8 @@ public class AreaSubdivision
 		}
 
 		int n = 1 << aLevel;
-		double min = 100000;
-		double max = -100000;
+		double min = Integer.MAX_VALUE;
+		double max = Integer.MIN_VALUE;
 
 		for (int y = 0; y < n; y++)
 		{
@@ -82,19 +90,13 @@ public class AreaSubdivision
 				if (aBlockY + y < aCoefficients.length && aBlockX + x < aCoefficients[0].length)
 				{
 					double r = aCoefficients[aBlockY + y][aBlockX + x];
-					if (r < min)
-					{
-						min = r;
-					}
-					if (r > max)
-					{
-						max = r;
-					}
+					min = Math.min(min, r);
+					max = Math.max(max, r);
 				}
 			}
 		}
 
-		double limit = 0.0625*2; // 128=0.0625
+		double limit = 0.0625 * 2; // 128=0.0625
 		double delta = Math.abs(max - min);
 
 		if (aLevel == 0 || 8 * aBlockX + 8 * n <= aInput.getWidth() && 8 * aBlockY + 8 * n <= aInput.getHeight() && aLevel <= 6 && delta < limit)
@@ -144,9 +146,9 @@ public class AreaSubdivision
 
 		ColorSpace.toYUV2(block, y, u, v);
 
-		dct.forward(y);
-//		dct.forward(u);
-//		dct.forward(v);
+		DCT.forward(y);
+//		DCT.forward(u);
+//		DCT.forward(v);
 
 		if (y[0] >= 2048)
 		{
@@ -154,6 +156,7 @@ public class AreaSubdivision
 		}
 
 		return y[0] / 2048.0;
+//		return u[0] / 2048.0;
 //		return (u[0]+v[0])/2048.0/2;
 //		return (y[0]+u[0]+v[0])/2048.0/3;
 	}
@@ -165,15 +168,15 @@ public class AreaSubdivision
 		int h = aImage.getHeight();
 		int s = 512;
 
-		if ((w & (s-1)) != 0 || (h & (s-1)) != 0)
+		if ((w & (s - 1)) != 0 || (h & (s - 1)) != 0)
 		{
-			BufferedImage dst = new BufferedImage(s * ((w + (s-1)) / s), s * ((h + (s-1)) / s), BufferedImage.TYPE_INT_RGB);
+			BufferedImage dst = new BufferedImage(s * ((w + (s - 1)) / s), s * ((h + (s - 1)) / s), BufferedImage.TYPE_INT_RGB);
 
-			Graphics g = dst.createGraphics();
+			Graphics2D g = dst.createGraphics();
 
-			g.drawImage(aImage, w, 0, dst.getWidth(), h, w-1, 0, w, h, null);
-			g.drawImage(aImage, 0, h, w, dst.getHeight(), 0, h-1, w, h, null);
-			g.drawImage(aImage, w, h, dst.getWidth(), dst.getHeight(), w-1, h-1, w, h, null);
+			g.drawImage(aImage, w, 0, dst.getWidth(), h, w - 1, 0, w, h, null);
+			g.drawImage(aImage, 0, h, w, dst.getHeight(), 0, h - 1, w, h, null);
+			g.drawImage(aImage, w, h, dst.getWidth(), dst.getHeight(), w - 1, h - 1, w, h, null);
 			g.drawImage(aImage, 0, 0, null);
 
 			g.dispose();

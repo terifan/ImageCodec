@@ -1,4 +1,4 @@
-package org.terifan.imagecodec.deprecated;
+package deprecated;
 
 import org.terifan.imagecodec.ColorSpace;
 import java.awt.Color;
@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
 import javax.imageio.ImageIO;
-import static org.terifan.imagecodec.deprecated.Tools.*;
+import static deprecated.Tools.*;
 
 
 public class Prediction
