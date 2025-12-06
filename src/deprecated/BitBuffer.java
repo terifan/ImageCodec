@@ -3,7 +3,7 @@ package deprecated;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
-import org.terifan.util.Debug;
+import org.terifan.util.HexDump;
 
 
 public class BitBuffer
@@ -71,7 +71,7 @@ public class BitBuffer
 		{
 			mLength = aIndex+1;
 		}
-		
+
 		return this;
 	}
 
@@ -86,7 +86,7 @@ public class BitBuffer
 		return getBit(mPosition++);
 	}
 
-	
+
 	public void writeAlign()
 	{
 		int len = (8-(mPosition & 7)) & 7;
@@ -96,12 +96,12 @@ public class BitBuffer
 		}
 	}
 
-	
+
 	public void readAlign()
 	{
 		mPosition += (8-(mPosition & 7)) & 7;
 	}
-	
+
 
 	public BitBuffer writeBit(int aBit)
 	{
@@ -170,7 +170,7 @@ public class BitBuffer
 		{
 			throw new IllegalArgumentException("Illegal length: " + aLength);
 		}
-		
+
 		for (int i = 0; i < aLength; i++)
 		{
 			setBit(mPosition++, (int)(aValue & 1L));
@@ -198,13 +198,13 @@ public class BitBuffer
 	}
 
 
-	public long readBits(long aLength)	
+	public long readBits(long aLength)
 	{
 		if (aLength < 0 || aLength > 64)
 		{
 			throw new IllegalArgumentException("Illegal length: " + aLength);
 		}
-		
+
 		long value = 0;
 		for (int i = 0; i < aLength; i++)
 		{
@@ -231,7 +231,7 @@ public class BitBuffer
 		}
 
 		long v = ((1L << m) + readBits((long)m)) - 1;
-		
+
 		if (aExponent > 0)
 		{
 			v <<= aExponent;
@@ -240,7 +240,7 @@ public class BitBuffer
 
 		return v;
 	}
-	
+
 
 	/**
 	 * Writes a variable length Exponential Golomb value from the buffer and advances the buffer position.
@@ -251,7 +251,7 @@ public class BitBuffer
 		{
 			throw new IllegalArgumentException("Positive numbers only supported: " + aValue);
 		}
-		
+
 		long s = (1L << aExponent) - 1;
 		long n = ((aValue & ~s) >>> aExponent) + 1;
 		int m = (int)Math.ceil(Math.log(n + 1) / LOG2) - 1;
@@ -267,23 +267,23 @@ public class BitBuffer
 	public BitBuffer capacity(int aBitCount)
 	{
 		int len = 1 + (aBitCount + 7) / 8;
-		
+
 		if (len < mBuffer.length)
 		{
 			return this;
 		}
-		
+
 		mBuffer = Arrays.copyOfRange(mBuffer, 0, len);
 
 		return this;
 	}
 
-	
+
 	public int capacity()
 	{
 		return 8 * mBuffer.length;
 	}
-	
+
 
 	public BitBuffer position(int aPosition)
 	{
@@ -291,7 +291,7 @@ public class BitBuffer
 		{
 			throw new IllegalArgumentException("Position out of rage: length: " + mLength+", position: "+aPosition);
 		}
-		
+
 		mPosition = aPosition;
 		return this;
 	}
@@ -430,31 +430,31 @@ public class BitBuffer
 				s.setBit(i, 1-s.getBit(i));
 				System.out.println(s+" "+(255&s.array()[0])+" "+(255&s.array()[1]));
 			}
-			
+
 			s.position(0);
-			
+
 			s.writeBits('A', 8);
 			s.writeBits(7, 3);
 			s.writeBits(4, 3);
 			s.writeBits(124, 7);
 			s.writeBits(0, 3);
 			s.writeBits(0xcafebabe, 32);
-			
+
 			s.position(0);
-			
+
 			System.out.println(s.readBits(8));
 			System.out.println(s.readBits(3));
 			System.out.println(s.readBits(3));
 			System.out.println(s.readBits(7));
 			System.out.println(s.readBits(3));
 			System.out.println(Integer.toHexString(s.readBits(32)));
-			
+
 			System.out.println(s+" "+(255&s.array()[0])+" "+(255&s.array()[1]));
-			
-			Debug.hexDump(s.toByteArray());
+
+			HexDump.dump(s.toByteArray());
 			System.out.println("");
 			//if(true)return;
-			
+
 			Random rnd = new Random(1);
 
 			BitBuffer stream = new BitBuffer();
@@ -497,7 +497,7 @@ public class BitBuffer
 			stream.trim();
 
 			System.out.println(stream);
-			
+
 			stream = new BitBuffer();
 			long [] values = new long[10];
 			for (int i = 0; i < values.length; i++)
@@ -628,7 +628,7 @@ public class BitBuffer
 //		{
 //			mLength = aIndex+1;
 //		}
-//		
+//
 //		return this;
 //	}
 //
@@ -668,7 +668,7 @@ public class BitBuffer
 //		}
 //
 //		writeBits((long)aValue, aLength);
-//		
+//
 ////		capacity(mPosition+aLength);
 ////
 ////		if ((mPosition & 7) > 0)
@@ -690,14 +690,14 @@ public class BitBuffer
 ////			}
 ////			aLength -= n;
 ////		}
-////		
+////
 ////		for (int p = mPosition/8; aLength >= 8; p++)
 ////		{
 ////			aLength -= 8;
 ////			mBuffer[p] = (byte)(aValue >>> aLength);
 ////			mPosition += 8;
 ////		}
-////		
+////
 ////		for (int i = aLength; --i >= 0; )
 ////		{
 ////			int byteIndex = mPosition >>> 3;
@@ -712,7 +712,7 @@ public class BitBuffer
 ////			}
 ////			mPosition++;
 ////		}
-////		
+////
 ////		if (mPosition > mLength)
 ////		{
 ////			mLength = mPosition;
@@ -750,14 +750,14 @@ public class BitBuffer
 //			}
 //			aLength -= n;
 //		}
-//		
+//
 //		for (int p = mPosition/8; aLength >= 8; p++)
 //		{
 //			mBuffer[p] = (byte)(aValue >>> (aLength-8));
 //			aLength -= 8;
 //			mPosition += 8;
 //		}
-//		
+//
 //		for (int i = aLength; --i >= 0; )
 //		{
 //			int byteIndex = mPosition >>> 3;
@@ -772,7 +772,7 @@ public class BitBuffer
 //			}
 //			mPosition++;
 //		}
-//		
+//
 //		if (mPosition > mLength)
 //		{
 //			mLength = mPosition;
@@ -803,13 +803,13 @@ public class BitBuffer
 //	}
 //
 //
-//	public long readBits(long aLength)	
+//	public long readBits(long aLength)
 //	{
 //		if (aLength < 0 || aLength > 64)
 //		{
 //			throw new IllegalArgumentException("Illegal length: " + aLength);
 //		}
-//		
+//
 //		long value = 0;
 //		for (int i = 0; i < aLength; i++)
 //		{
@@ -836,7 +836,7 @@ public class BitBuffer
 //		}
 //
 //		long v = ((1L << m) + readBits((long)m)) - 1;
-//		
+//
 //		if (aExponent > 0)
 //		{
 //			v <<= aExponent;
@@ -845,7 +845,7 @@ public class BitBuffer
 //
 //		return v;
 //	}
-//	
+//
 //
 //	/**
 //	 * Writes a variable length Exponential Golomb value from the buffer and advances the buffer position.
@@ -856,7 +856,7 @@ public class BitBuffer
 //		{
 //			throw new IllegalArgumentException("Positive numbers only supported: " + aValue);
 //		}
-//		
+//
 //		long s = (1L << aExponent) - 1;
 //		long n = ((aValue & ~s) >>> aExponent) + 1;
 //		int m = (int)Math.ceil(Math.log(n + 1) / LOG2) - 1;
@@ -872,23 +872,23 @@ public class BitBuffer
 //	public BitBuffer capacity(int aBitCount)
 //	{
 //		int len = 1 + (aBitCount + 7) / 8;
-//		
+//
 //		if (len < mBuffer.length)
 //		{
 //			return this;
 //		}
-//		
+//
 //		mBuffer = Arrays.copyOfRange(mBuffer, 0, len);
 //
 //		return this;
 //	}
 //
-//	
+//
 //	public int capacity()
 //	{
 //		return mBuffer.length;
 //	}
-//	
+//
 //
 //	public BitBuffer position(int aPosition)
 //	{
@@ -1038,31 +1038,31 @@ public class BitBuffer
 //				s.setBit(i, 1-s.getBit(i));
 //				System.out.println(s+" "+(255&s.array()[0])+" "+(255&s.array()[1]));
 //			}
-//			
+//
 //			s.position(0);
-//			
+//
 //			s.writeBits('A', 8);
 //			s.writeBits(7, 3);
 //			s.writeBits(4, 3);
 //			s.writeBits(124, 7);
 //			s.writeBits(0, 3);
 //			s.writeBits(0xcafebabe, 32);
-//			
+//
 //			s.position(0);
-//			
+//
 //			System.out.println(s.readBits(8));
 //			System.out.println(s.readBits(3));
 //			System.out.println(s.readBits(3));
 //			System.out.println(s.readBits(7));
 //			System.out.println(s.readBits(3));
 //			System.out.println(Integer.toHexString(s.readBits(32)));
-//			
+//
 //			System.out.println(s+" "+(255&s.array()[0])+" "+(255&s.array()[1]));
-//			
+//
 //			Debug.hexDump(s.toByteArray());
 //			System.out.println("");
 //			if(true)return;
-//			
+//
 //			Random rnd = new Random(1);
 //
 //			BitBuffer stream = new BitBuffer();
@@ -1105,7 +1105,7 @@ public class BitBuffer
 //			stream.trim();
 //
 //			System.out.println(stream);
-//			
+//
 //			stream = new BitBuffer();
 //			long [] values = new long[10];
 //			for (int i = 0; i < values.length; i++)
